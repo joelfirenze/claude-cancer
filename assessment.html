@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Profile | CancerInsight SG</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">&#127973;</span>
+                CancerInsight SG
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="assessment.html" class="active">Health Profile</a></li>
+                <li><a href="survival.html">Survival Rates</a></li>
+                <li><a href="treatment.html">Treatments</a></li>
+                <li><a href="costs.html">Costs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1>Health Profile Assessment</h1>
+            <p>Your health background can influence cancer prognosis. This assessment helps provide more relevant survival statistics based on your individual factors.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="disclaimer" style="margin-top: var(--spacing-xl);">
+            <div class="disclaimer__title">Important Notice</div>
+            <p>This assessment is for educational purposes only. The factors collected here can influence prognosis, but individual outcomes vary greatly. Always consult with your oncologist for personalized medical advice.</p>
+        </div>
+
+        <section class="section">
+            <div class="info-card">
+                <h2>About This Assessment</h2>
+                <p>Research shows that certain health conditions (comorbidities) can affect cancer survival outcomes. This tool collects basic health information to:</p>
+                <ul>
+                    <li>Provide more relevant survival statistics based on your demographic</li>
+                    <li>Highlight potential interactions between cancer and existing conditions</li>
+                    <li>Suggest additional considerations for treatment planning</li>
+                </ul>
+                <p style="margin-top: var(--spacing-md);"><strong>Your data stays in your browser</strong> - we do not collect or store any personal health information.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <form id="health-assessment">
+                <!-- Section 1: Basic Demographics -->
+                <div class="tabs-container" style="margin-bottom: var(--spacing-xl);">
+                    <div style="padding: var(--spacing-xl);">
+                        <h3 style="margin-bottom: var(--spacing-lg);">1. Basic Information</h3>
+
+                        <div class="form-group">
+                            <label class="form-label">Gender <small>(at birth)</small></label>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md);">
+                                <label class="radio-option">
+                                    <input type="radio" name="gender" value="male" required>
+                                    <span class="radio-label">
+                                        <strong>Male</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="gender" value="female">
+                                    <span class="radio-label">
+                                        <strong>Female</strong>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Age Range</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="age" value="under40" required>
+                                    <span class="radio-label">
+                                        <strong>Under 40</strong>
+                                        <small>Early-onset cancers may have different characteristics</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="age" value="40-49">
+                                    <span class="radio-label">
+                                        <strong>40-49 years</strong>
+                                        <small>Cancer screening often begins in this age group</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="age" value="50-59">
+                                    <span class="radio-label">
+                                        <strong>50-59 years</strong>
+                                        <small>Incidence increases significantly in this decade</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="age" value="60-69">
+                                    <span class="radio-label">
+                                        <strong>60-69 years</strong>
+                                        <small>Most common age group for cancer diagnosis</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="age" value="70-79">
+                                    <span class="radio-label">
+                                        <strong>70-79 years</strong>
+                                        <small>Treatment decisions may factor in overall health</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="age" value="80plus">
+                                    <span class="radio-label">
+                                        <strong>80+ years</strong>
+                                        <small>Quality of life often prioritized in treatment</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Chronic Conditions -->
+                <div class="tabs-container" style="margin-bottom: var(--spacing-xl);">
+                    <div style="padding: var(--spacing-xl);">
+                        <h3 style="margin-bottom: var(--spacing-sm);">2. Chronic Conditions</h3>
+                        <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-lg);">Select any conditions you have been diagnosed with. These can affect cancer treatment and prognosis.</p>
+
+                        <div class="checkbox-grid">
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="diabetes">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">Diabetes</span>
+                                        <span class="checkbox-card__desc">Type 1 or Type 2</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="hypertension">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">Hypertension</span>
+                                        <span class="checkbox-card__desc">High blood pressure</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="heart_disease">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">Heart Disease</span>
+                                        <span class="checkbox-card__desc">CAD, heart failure, etc.</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="kidney_disease">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">Kidney Disease</span>
+                                        <span class="checkbox-card__desc">CKD or on dialysis</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="liver_disease">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">Liver Disease</span>
+                                        <span class="checkbox-card__desc">Hepatitis, cirrhosis, etc.</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="copd">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">COPD/Lung Disease</span>
+                                        <span class="checkbox-card__desc">Chronic lung conditions</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="autoimmune">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">Autoimmune Disease</span>
+                                        <span class="checkbox-card__desc">Lupus, RA, etc.</span>
+                                    </div>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="condition" value="none">
+                                <div class="checkbox-card__content">
+                                    <div class="checkbox-card__icon">&#10003;</div>
+                                    <div class="checkbox-card__text">
+                                        <span class="checkbox-card__label">None of the above</span>
+                                        <span class="checkbox-card__desc">No chronic conditions</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="citation" style="margin-top: var(--spacing-lg);">
+                            <span class="citation__source">Research Note:</span> Studies show that diabetes is associated with a 3.75x mortality rate ratio in cancer patients. Colorectal cancer patients with diabetes have median survival of 4.9 years vs 8.5 years with hypertension alone.
+                            <a href="https://www.nature.com/articles/s41598-024-61563-9" target="_blank">Source: Nature Scientific Reports 2024</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Lifestyle Factors -->
+                <div class="tabs-container" style="margin-bottom: var(--spacing-xl);">
+                    <div style="padding: var(--spacing-xl);">
+                        <h3 style="margin-bottom: var(--spacing-sm);">3. Lifestyle Factors</h3>
+                        <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-lg);">These factors have been shown to significantly impact cancer survival.</p>
+
+                        <div class="form-group">
+                            <label class="form-label">Smoking Status</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="smoking" value="never" required>
+                                    <span class="radio-label">
+                                        <strong>Never Smoked</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="smoking" value="former">
+                                    <span class="radio-label">
+                                        <strong>Former Smoker</strong>
+                                        <small>Quit more than 1 year ago</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="smoking" value="current">
+                                    <span class="radio-label">
+                                        <strong>Current Smoker</strong>
+                                        <small>Smoking associated with HR 2.15 in cancer outcomes</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Physical Activity Level</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="activity" value="high" required>
+                                    <span class="radio-label">
+                                        <strong>Active</strong>
+                                        <small>Regular exercise (3+ times/week)</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="activity" value="moderate">
+                                    <span class="radio-label">
+                                        <strong>Moderately Active</strong>
+                                        <small>Some regular physical activity</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="activity" value="low">
+                                    <span class="radio-label">
+                                        <strong>Low Activity</strong>
+                                        <small>Sedentary lifestyle (associated with HR 1.59)</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">BMI Category</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="bmi" value="underweight">
+                                    <span class="radio-label">
+                                        <strong>Underweight</strong>
+                                        <small>BMI below 18.5</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="bmi" value="normal">
+                                    <span class="radio-label">
+                                        <strong>Normal Weight</strong>
+                                        <small>BMI 18.5-24.9</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="bmi" value="overweight">
+                                    <span class="radio-label">
+                                        <strong>Overweight</strong>
+                                        <small>BMI 25-29.9</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="bmi" value="obese">
+                                    <span class="radio-label">
+                                        <strong>Obese</strong>
+                                        <small>BMI 30 or above</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Cancer History -->
+                <div class="tabs-container" style="margin-bottom: var(--spacing-xl);">
+                    <div style="padding: var(--spacing-xl);">
+                        <h3 style="margin-bottom: var(--spacing-sm);">4. Cancer History</h3>
+                        <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-lg);">Information about family history and previous diagnoses.</p>
+
+                        <div class="form-group">
+                            <label class="form-label">Family History of Cancer</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="family_history" value="none" required>
+                                    <span class="radio-label">
+                                        <strong>No known family history</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="family_history" value="distant">
+                                    <span class="radio-label">
+                                        <strong>Extended family</strong>
+                                        <small>Grandparents, aunts, uncles, cousins</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="family_history" value="immediate">
+                                    <span class="radio-label">
+                                        <strong>Immediate family</strong>
+                                        <small>Parents or siblings with cancer</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="family_history" value="multiple">
+                                    <span class="radio-label">
+                                        <strong>Multiple family members</strong>
+                                        <small>May indicate hereditary cancer syndrome</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Previous Cancer Diagnosis</label>
+                            <div class="radio-group">
+                                <label class="radio-option">
+                                    <input type="radio" name="previous_cancer" value="no" required>
+                                    <span class="radio-label">
+                                        <strong>No previous cancer</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="previous_cancer" value="yes_cured">
+                                    <span class="radio-label">
+                                        <strong>Yes, in remission/cured</strong>
+                                        <small>Completed treatment, no active disease</small>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="previous_cancer" value="yes_active">
+                                    <span class="radio-label">
+                                        <strong>Yes, currently being treated</strong>
+                                        <small>Active cancer treatment</small>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Cancer of Interest -->
+                <div class="tabs-container" style="margin-bottom: var(--spacing-xl);">
+                    <div style="padding: var(--spacing-xl);">
+                        <h3 style="margin-bottom: var(--spacing-sm);">5. Cancer Type of Interest</h3>
+                        <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-lg);">Select the cancer type you want to learn more about.</p>
+
+                        <div class="form-group">
+                            <label class="form-label">Cancer Type</label>
+                            <select class="form-select" name="cancer_type" id="cancer-type-select" required>
+                                <option value="">-- Select a cancer type --</option>
+                                <optgroup label="Common in Males">
+                                    <option value="prostate">Prostate Cancer</option>
+                                    <option value="kidney">Kidney Cancer</option>
+                                    <option value="bladder">Bladder Cancer</option>
+                                    <option value="nasopharyngeal">Nasopharyngeal Cancer</option>
+                                </optgroup>
+                                <optgroup label="Common in Females">
+                                    <option value="breast">Breast Cancer</option>
+                                    <option value="uterus">Uterine Cancer</option>
+                                    <option value="ovary">Ovarian Cancer</option>
+                                    <option value="cervix">Cervical Cancer</option>
+                                    <option value="thyroid">Thyroid Cancer</option>
+                                </optgroup>
+                                <optgroup label="Both Genders">
+                                    <option value="colorectal">Colorectal Cancer</option>
+                                    <option value="lung">Lung Cancer</option>
+                                    <option value="liver">Liver Cancer</option>
+                                    <option value="stomach">Stomach Cancer</option>
+                                    <option value="lymphoma">Lymphoma</option>
+                                    <option value="pancreas">Pancreatic Cancer</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Stage at Diagnosis (if known)</label>
+                            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--spacing-md);">
+                                <label class="radio-option">
+                                    <input type="radio" name="stage" value="unknown">
+                                    <span class="radio-label" style="text-align: center;">
+                                        <strong>Unknown</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="stage" value="1">
+                                    <span class="radio-label" style="text-align: center;">
+                                        <span class="stage-badge stage-1">I</span>
+                                        <strong style="display: block; margin-top: 8px;">Stage I</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="stage" value="2">
+                                    <span class="radio-label" style="text-align: center;">
+                                        <span class="stage-badge stage-2">II</span>
+                                        <strong style="display: block; margin-top: 8px;">Stage II</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="stage" value="3">
+                                    <span class="radio-label" style="text-align: center;">
+                                        <span class="stage-badge stage-3">III</span>
+                                        <strong style="display: block; margin-top: 8px;">Stage III</strong>
+                                    </span>
+                                </label>
+                                <label class="radio-option">
+                                    <input type="radio" name="stage" value="4">
+                                    <span class="radio-label" style="text-align: center;">
+                                        <span class="stage-badge stage-4">IV</span>
+                                        <strong style="display: block; margin-top: 8px;">Stage IV</strong>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-primary btn-lg">View Personalized Information</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Impact of Comorbidities Section -->
+        <section class="section">
+            <h2 style="margin-bottom: var(--spacing-lg);">How Health Conditions Affect Cancer Outcomes</h2>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Condition</th>
+                            <th>Impact on Cancer</th>
+                            <th>Hazard Ratio</th>
+                            <th>Research Finding</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Type 2 Diabetes</strong></td>
+                            <td>Increased mortality, affects treatment tolerance</td>
+                            <td class="number">3.75x</td>
+                            <td>Associated with higher all-cause mortality in cancer patients</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hypertension</strong></td>
+                            <td>May affect treatment choices</td>
+                            <td class="number">1.2-1.5x</td>
+                            <td>CRC patients with HTN: 8.52 years median survival</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Current Smoking</strong></td>
+                            <td>Worse outcomes across most cancers</td>
+                            <td class="number">2.15x</td>
+                            <td>Strongest modifiable risk factor for mortality</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Low Physical Activity</strong></td>
+                            <td>Associated with poorer survival</td>
+                            <td class="number">1.59x</td>
+                            <td>Regular exercise improves outcomes and quality of life</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Heart Disease</strong></td>
+                            <td>May limit treatment options</td>
+                            <td class="number">Variable</td>
+                            <td>Some chemotherapy agents affect heart function</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kidney Disease</strong></td>
+                            <td>Affects drug metabolism and dosing</td>
+                            <td class="number">Variable</td>
+                            <td>May require adjusted treatment protocols</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="citation">
+                <span class="citation__source">Sources:</span>
+                <a href="https://www.nature.com/articles/s41598-024-61563-9" target="_blank">Nature Scientific Reports 2024</a>,
+                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8616213/" target="_blank">PMC: Diabetes and Cancer</a>,
+                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4268193/" target="_blank">PMC: Hypertension and Cancer Survival</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4>CancerInsight SG</h4>
+                    <p>Providing evidence-based cancer information to help Singaporeans make informed decisions about their healthcare.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="assessment.html">Health Profile</a></li>
+                        <li><a href="survival.html">Survival Rates</a></li>
+                        <li><a href="treatment.html">Treatments</a></li>
+                        <li><a href="costs.html">Costs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Data Sources</h4>
+                    <ul>
+                        <li><a href="https://www.nrdo.gov.sg/publications/cancer" target="_blank">SG Cancer Registry</a></li>
+                        <li><a href="https://seer.cancer.gov/statfacts/" target="_blank">SEER Statistics</a></li>
+                        <li><a href="https://gco.iarc.who.int/" target="_blank">GLOBOCAN</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://www.nccs.com.sg" target="_blank">NCCS</a></li>
+                        <li><a href="https://www.singaporecancersociety.org.sg" target="_blank">SG Cancer Society</a></li>
+                        <li><a href="resources.html">All Resources</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CancerInsight SG. For educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

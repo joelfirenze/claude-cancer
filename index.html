@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CancerInsight SG | Cancer Survival & Treatment Information</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">&#127973;</span>
+                CancerInsight SG
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="assessment.html">Health Profile</a></li>
+                <li><a href="survival.html">Survival Rates</a></li>
+                <li><a href="treatment.html">Treatments</a></li>
+                <li><a href="costs.html">Costs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Understanding Cancer Survival & Treatment</h1>
+            <p>Evidence-based information on cancer survival rates, treatment options, and costs in Singapore. Data sourced from Singapore Cancer Registry and international databases.</p>
+            <div style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md);">
+                <a href="assessment.html" class="btn btn-primary btn-lg">Start Health Profile</a>
+                <a href="survival.html" class="btn btn-secondary btn-lg">View Survival Data</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- Disclaimer -->
+        <div class="disclaimer" style="margin-top: var(--spacing-xl);">
+            <div class="disclaimer__title">Medical Disclaimer</div>
+            <p>This website provides general information for educational purposes only. It is not intended as medical advice and should not replace consultation with qualified healthcare professionals. Always consult an oncologist for personalized advice regarding your specific condition.</p>
+        </div>
+
+        <!-- Quick Statistics -->
+        <section class="section">
+            <h2 style="text-align: center; margin-bottom: var(--spacing-lg);">Cancer in Singapore: Key Statistics</h2>
+            <p style="text-align: center; color: var(--color-gray-600); margin-bottom: var(--spacing-xl);">Data from Singapore Cancer Registry Annual Report 2022 (2018-2022)</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card__value">87,716</div>
+                    <div class="stat-card__label">Total Cases (2018-2022)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value">48</div>
+                    <div class="stat-card__label">New Cases Daily</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value">72</div>
+                    <div class="stat-card__label">Deaths per 100,000</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value">&#8593; Improved</div>
+                    <div class="stat-card__label">Overall Survival Trend</div>
+                </div>
+            </div>
+
+            <div class="citation">
+                <span class="citation__source">Source:</span> Singapore Cancer Registry Annual Report 2022, National Registry of Diseases Office.
+                <a href="https://www.nrdo.gov.sg/publications/cancer" target="_blank">View Full Report</a>
+            </div>
+        </section>
+
+        <!-- Cancer Type Selection -->
+        <section class="section">
+            <h2 style="margin-bottom: var(--spacing-md);">Select a Cancer Type</h2>
+            <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-xl);">Choose a cancer type to view detailed survival rates, treatment options, and cost information. Data reflects Singapore statistics where available.</p>
+
+            <!-- Gender Filter -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Filter by Gender</label>
+                    <select class="filter-select" id="gender-filter">
+                        <option value="all">All Cancers</option>
+                        <option value="male">Male Cancers</option>
+                        <option value="female">Female Cancers</option>
+                        <option value="both">Affects Both</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort by</label>
+                    <select class="filter-select" id="sort-filter">
+                        <option value="prevalence">Prevalence (Most Common)</option>
+                        <option value="survival-high">Survival Rate (High to Low)</option>
+                        <option value="survival-low">Survival Rate (Low to High)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="cancer-grid" id="cancer-grid">
+                <!-- Male Cancers -->
+                <div class="cancer-card" data-cancer="prostate" data-gender="male" data-survival="89.2" onclick="selectCancer('prostate')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Prostate Cancer</h3>
+                        <span class="cancer-card__gender">Male</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Most common cancer in Singapore males</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">7,515</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">89.2%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill excellent" style="width: 89.2%"></div>
+                    </div>
+                </div>
+
+                <!-- Breast Cancer -->
+                <div class="cancer-card" data-cancer="breast" data-gender="female" data-survival="82" onclick="selectCancer('breast')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Breast Cancer</h3>
+                        <span class="cancer-card__gender">Female</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Most common cancer in Singapore females</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">13,193</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~82%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill excellent" style="width: 82%"></div>
+                    </div>
+                </div>
+
+                <!-- Colorectal Cancer -->
+                <div class="cancer-card" data-cancer="colorectal" data-gender="both" data-survival="62" onclick="selectCancer('colorectal')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Colorectal Cancer</h3>
+                        <span class="cancer-card__gender">Both</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">2nd most common in both genders</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">12,704</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~62%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill moderate" style="width: 62%"></div>
+                    </div>
+                </div>
+
+                <!-- Lung Cancer -->
+                <div class="cancer-card" data-cancer="lung" data-gender="both" data-survival="26" onclick="selectCancer('lung')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Lung Cancer</h3>
+                        <span class="cancer-card__gender">Both</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Top cause of cancer mortality</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">9,293</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~26%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill poor" style="width: 26%"></div>
+                    </div>
+                </div>
+
+                <!-- Liver Cancer -->
+                <div class="cancer-card" data-cancer="liver" data-gender="both" data-survival="18" onclick="selectCancer('liver')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Liver Cancer</h3>
+                        <span class="cancer-card__gender">Both</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Often diagnosed at advanced stages</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~4,500</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~18%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill poor" style="width: 18%"></div>
+                    </div>
+                </div>
+
+                <!-- Stomach Cancer -->
+                <div class="cancer-card" data-cancer="stomach" data-gender="both" data-survival="32" onclick="selectCancer('stomach')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Stomach Cancer</h3>
+                        <span class="cancer-card__gender">Both</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">More common in males</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~3,200</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~32%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill fair" style="width: 32%"></div>
+                    </div>
+                </div>
+
+                <!-- Uterine Cancer -->
+                <div class="cancer-card" data-cancer="uterus" data-gender="female" data-survival="78" onclick="selectCancer('uterus')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Uterine Cancer</h3>
+                        <span class="cancer-card__gender">Female</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">4th most common in females</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~3,500</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~78%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill good" style="width: 78%"></div>
+                    </div>
+                </div>
+
+                <!-- Ovarian Cancer -->
+                <div class="cancer-card" data-cancer="ovary" data-gender="female" data-survival="45" onclick="selectCancer('ovary')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Ovarian Cancer</h3>
+                        <span class="cancer-card__gender">Female</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Often detected late due to subtle symptoms</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~2,400</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~45%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill moderate" style="width: 45%"></div>
+                    </div>
+                </div>
+
+                <!-- Lymphoma -->
+                <div class="cancer-card" data-cancer="lymphoma" data-gender="both" data-survival="68" onclick="selectCancer('lymphoma')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Lymphoma</h3>
+                        <span class="cancer-card__gender">Both</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Hodgkin and Non-Hodgkin types</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~3,800</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~68%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill moderate" style="width: 68%"></div>
+                    </div>
+                </div>
+
+                <!-- Thyroid Cancer -->
+                <div class="cancer-card" data-cancer="thyroid" data-gender="female" data-survival="95" onclick="selectCancer('thyroid')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Thyroid Cancer</h3>
+                        <span class="cancer-card__gender">Female</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Highly treatable with excellent prognosis</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~2,800</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~95%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill excellent" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <!-- Kidney Cancer -->
+                <div class="cancer-card" data-cancer="kidney" data-gender="male" data-survival="72" onclick="selectCancer('kidney')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Kidney Cancer</h3>
+                        <span class="cancer-card__gender">Male</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">More common in males over 60</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~1,800</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~72%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill good" style="width: 72%"></div>
+                    </div>
+                </div>
+
+                <!-- Bladder Cancer -->
+                <div class="cancer-card" data-cancer="bladder" data-gender="male" data-survival="75" onclick="selectCancer('bladder')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Bladder Cancer</h3>
+                        <span class="cancer-card__gender">Male</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Linked to smoking and chemical exposure</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~1,600</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~75%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill good" style="width: 75%"></div>
+                    </div>
+                </div>
+
+                <!-- Pancreatic Cancer -->
+                <div class="cancer-card" data-cancer="pancreas" data-gender="both" data-survival="10" onclick="selectCancer('pancreas')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Pancreatic Cancer</h3>
+                        <span class="cancer-card__gender">Both</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Often diagnosed at advanced stage</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~1,500</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~10%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill poor" style="width: 10%"></div>
+                    </div>
+                </div>
+
+                <!-- Nasopharyngeal Cancer -->
+                <div class="cancer-card" data-cancer="nasopharyngeal" data-gender="male" data-survival="60" onclick="selectCancer('nasopharyngeal')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Nasopharyngeal Cancer</h3>
+                        <span class="cancer-card__gender">Male</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">More common in Chinese ethnicity</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~1,400</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~60%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill moderate" style="width: 60%"></div>
+                    </div>
+                </div>
+
+                <!-- Cervical Cancer -->
+                <div class="cancer-card" data-cancer="cervix" data-gender="female" data-survival="65" onclick="selectCancer('cervix')">
+                    <div class="cancer-card__header">
+                        <h3 class="cancer-card__name">Cervical Cancer</h3>
+                        <span class="cancer-card__gender">Female</span>
+                    </div>
+                    <p style="color: var(--color-gray-600); font-size: 0.875rem; margin-bottom: var(--spacing-sm);">Preventable with HPV vaccination & screening</p>
+                    <div class="cancer-card__stats">
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~1,200</div>
+                            <div class="cancer-card__stat-label">Cases (2018-2022)</div>
+                        </div>
+                        <div class="cancer-card__stat">
+                            <div class="cancer-card__stat-value">~65%</div>
+                            <div class="cancer-card__stat-label">5-Year Survival</div>
+                        </div>
+                    </div>
+                    <div class="survival-meter">
+                        <div class="survival-meter__fill moderate" style="width: 65%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Understanding Survival Rates -->
+        <section class="section">
+            <div class="info-card">
+                <h2>Understanding Survival Rates</h2>
+                <p>Survival rates are statistical estimates based on past patient outcomes. They describe the percentage of patients who are alive at a certain time after diagnosis.</p>
+
+                <h4 style="margin-top: var(--spacing-lg);">Key Terms</h4>
+                <ul>
+                    <li><strong>5-Year Relative Survival Rate:</strong> The percentage of patients who are alive 5 years after diagnosis, compared to the general population.</li>
+                    <li><strong>Relative vs. Observed Survival:</strong> Relative survival accounts for deaths from other causes, giving a clearer picture of cancer-specific outcomes.</li>
+                    <li><strong>Stage at Diagnosis:</strong> Early-stage cancers generally have much better survival rates than late-stage cancers.</li>
+                </ul>
+
+                <h4 style="margin-top: var(--spacing-lg);">Important Considerations</h4>
+                <ul>
+                    <li>Statistics are based on large groups - individual outcomes may vary significantly</li>
+                    <li>Treatment advances mean survival rates may be improving</li>
+                    <li>Your age, overall health, and response to treatment all affect prognosis</li>
+                    <li>Statistics cannot predict what will happen in any individual case</li>
+                </ul>
+
+                <div class="citation" style="margin-top: var(--spacing-lg);">
+                    <span class="citation__source">Data Sources:</span> Singapore Cancer Registry 2022, SEER (Surveillance, Epidemiology, and End Results) Program, GLOBOCAN 2022
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="section" style="text-align: center;">
+            <h2 style="margin-bottom: var(--spacing-md);">Get Personalized Information</h2>
+            <p style="max-width: 600px; margin: 0 auto var(--spacing-xl); color: var(--color-gray-600);">Create a health profile to see how factors like age, gender, and existing health conditions may affect survival statistics.</p>
+            <a href="assessment.html" class="btn btn-primary btn-lg">Start Health Profile</a>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4>CancerInsight SG</h4>
+                    <p>Providing evidence-based cancer information to help Singaporeans make informed decisions about their healthcare.</p>
+                    <p style="margin-top: var(--spacing-md);"><strong>Disclaimer:</strong> This site is for educational purposes only. Always consult healthcare professionals for medical advice.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="assessment.html">Health Profile</a></li>
+                        <li><a href="survival.html">Survival Rates</a></li>
+                        <li><a href="treatment.html">Treatments</a></li>
+                        <li><a href="costs.html">Costs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Data Sources</h4>
+                    <ul>
+                        <li><a href="https://www.nrdo.gov.sg/publications/cancer" target="_blank">SG Cancer Registry</a></li>
+                        <li><a href="https://seer.cancer.gov/statfacts/" target="_blank">SEER Statistics</a></li>
+                        <li><a href="https://gco.iarc.who.int/" target="_blank">GLOBOCAN</a></li>
+                        <li><a href="https://www.nccn.org/" target="_blank">NCCN Guidelines</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Support Resources</h4>
+                    <ul>
+                        <li><a href="https://www.nccs.com.sg" target="_blank">NCCS</a></li>
+                        <li><a href="https://www.singaporecancersociety.org.sg" target="_blank">SG Cancer Society</a></li>
+                        <li><a href="https://www.moh.gov.sg" target="_blank">Ministry of Health</a></li>
+                        <li><a href="resources.html">All Resources</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CancerInsight SG. For educational purposes only. Data last updated: 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

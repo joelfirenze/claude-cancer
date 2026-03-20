@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survival Rates | CancerInsight SG</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">&#127973;</span>
+                CancerInsight SG
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="assessment.html">Health Profile</a></li>
+                <li><a href="survival.html" class="active">Survival Rates</a></li>
+                <li><a href="treatment.html">Treatments</a></li>
+                <li><a href="costs.html">Costs</a></li>
+                <li><a href="resources.html">Resources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1>Cancer Survival Rates</h1>
+            <p>Explore survival statistics by cancer type, stage, and time period. Data sourced from Singapore Cancer Registry and SEER.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="disclaimer" style="margin-top: var(--spacing-xl);">
+            <div class="disclaimer__title">Understanding These Statistics</div>
+            <p>Survival rates are based on historical data and represent averages across many patients. Individual outcomes can vary significantly based on many factors including treatment response, overall health, and advances in medicine. These statistics should be discussed with your oncologist.</p>
+        </div>
+
+        <!-- Filters -->
+        <section class="section">
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Cancer Type</label>
+                    <select class="filter-select" id="cancer-filter" onchange="updateSurvivalData()">
+                        <option value="colorectal">Colorectal Cancer</option>
+                        <option value="breast">Breast Cancer</option>
+                        <option value="lung">Lung Cancer</option>
+                        <option value="prostate">Prostate Cancer</option>
+                        <option value="liver">Liver Cancer</option>
+                        <option value="stomach">Stomach Cancer</option>
+                        <option value="ovary">Ovarian Cancer</option>
+                        <option value="pancreas">Pancreatic Cancer</option>
+                        <option value="thyroid">Thyroid Cancer</option>
+                        <option value="kidney">Kidney Cancer</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Data Source</label>
+                    <select class="filter-select" id="source-filter">
+                        <option value="singapore">Singapore (where available)</option>
+                        <option value="seer">SEER (US Data)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Gender</label>
+                    <select class="filter-select" id="gender-survival-filter">
+                        <option value="all">All</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overall Survival Summary -->
+        <section class="section" style="padding-top: 0;">
+            <h2 style="margin-bottom: var(--spacing-lg);">Colorectal Cancer Survival Overview</h2>
+            <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-xl);" id="cancer-description">Second most common cancer in Singapore. Survival has improved significantly with advances in screening and treatment.</p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-1yr">85%</div>
+                    <div class="stat-card__label">1-Year Survival</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-3yr">72%</div>
+                    <div class="stat-card__label">3-Year Survival</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-5yr">65%</div>
+                    <div class="stat-card__label">5-Year Survival</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-card__value" id="stat-10yr">58%</div>
+                    <div class="stat-card__label">10-Year Survival</div>
+                </div>
+            </div>
+
+            <div class="citation">
+                <span class="citation__source">Data Source:</span> Singapore Cancer Registry Annual Report 2022, SEER 2015-2021.
+                <a href="https://www.nrdo.gov.sg/publications/cancer" target="_blank">View Singapore Report</a> |
+                <a href="https://seer.cancer.gov/statfacts/" target="_blank">View SEER Data</a>
+            </div>
+        </section>
+
+        <!-- Survival by Stage -->
+        <section class="section">
+            <h2 style="margin-bottom: var(--spacing-lg);">Survival Rates by Stage at Diagnosis</h2>
+            <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-xl);">Stage at diagnosis is one of the strongest predictors of survival. Earlier detection typically leads to better outcomes.</p>
+
+            <div class="tabs-container">
+                <div class="tab-navigation">
+                    <button class="tab-btn active" data-tab="stage-table">Data Table</button>
+                    <button class="tab-btn" data-tab="stage-chart">Chart View</button>
+                </div>
+
+                <div class="tab-content active" id="stage-table">
+                    <div class="data-table-container" style="box-shadow: none;">
+                        <table class="data-table" id="survival-by-stage">
+                            <thead>
+                                <tr>
+                                    <th>Stage</th>
+                                    <th>Description</th>
+                                    <th>1-Year</th>
+                                    <th>3-Year</th>
+                                    <th>5-Year</th>
+                                    <th>10-Year</th>
+                                    <th>% Diagnosed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="stage-badge stage-1">I</span> <strong>Localized</strong></td>
+                                    <td>Cancer confined to primary site</td>
+                                    <td class="number">98%</td>
+                                    <td class="number">95%</td>
+                                    <td class="number">91%</td>
+                                    <td class="number">85%</td>
+                                    <td>34%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="stage-badge stage-2">II</span> <strong>Regional</strong></td>
+                                    <td>Spread to nearby lymph nodes</td>
+                                    <td class="number">92%</td>
+                                    <td class="number">82%</td>
+                                    <td class="number">73%</td>
+                                    <td class="number">65%</td>
+                                    <td>28%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="stage-badge stage-3">III</span> <strong>Regional+</strong></td>
+                                    <td>Extensive regional spread</td>
+                                    <td class="number">85%</td>
+                                    <td class="number">68%</td>
+                                    <td class="number">58%</td>
+                                    <td class="number">48%</td>
+                                    <td>18%</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="stage-badge stage-4">IV</span> <strong>Distant</strong></td>
+                                    <td>Metastasized to distant organs</td>
+                                    <td class="number">45%</td>
+                                    <td class="number">22%</td>
+                                    <td class="number">15%</td>
+                                    <td class="number">10%</td>
+                                    <td>20%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="stage-chart">
+                    <div class="chart-container">
+                        <canvas id="stageChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="citation" style="margin-top: var(--spacing-lg);">
+                <span class="citation__source">Note:</span> SEER stages (Localized, Regional, Distant) are used for statistical purposes. Clinical staging (I-IV) may differ. Data based on SEER 2015-2021.
+            </div>
+        </section>
+
+        <!-- Survival by Age Group -->
+        <section class="section">
+            <h2 style="margin-bottom: var(--spacing-lg);">Survival Rates by Age Group</h2>
+            <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-xl);">Age at diagnosis can affect both treatment options and outcomes. Younger patients often have better survival rates, though this varies by cancer type.</p>
+
+            <div class="data-table-container">
+                <table class="data-table" id="survival-by-age">
+                    <thead>
+                        <tr>
+                            <th>Age Group</th>
+                            <th>1-Year</th>
+                            <th>3-Year</th>
+                            <th>5-Year</th>
+                            <th>10-Year</th>
+                            <th>% of Cases</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Under 40</strong></td>
+                            <td class="number">90%</td>
+                            <td class="number">78%</td>
+                            <td class="number">70%</td>
+                            <td class="number">65%</td>
+                            <td>3%</td>
+                            <td>May indicate hereditary factors</td>
+                        </tr>
+                        <tr>
+                            <td><strong>40-49</strong></td>
+                            <td class="number">91%</td>
+                            <td class="number">80%</td>
+                            <td class="number">72%</td>
+                            <td class="number">66%</td>
+                            <td>8%</td>
+                            <td>Rising incidence in this group</td>
+                        </tr>
+                        <tr>
+                            <td><strong>50-59</strong></td>
+                            <td class="number">89%</td>
+                            <td class="number">77%</td>
+                            <td class="number">69%</td>
+                            <td class="number">62%</td>
+                            <td>18%</td>
+                            <td>Screening typically begins</td>
+                        </tr>
+                        <tr>
+                            <td><strong>60-69</strong></td>
+                            <td class="number">87%</td>
+                            <td class="number">74%</td>
+                            <td class="number">65%</td>
+                            <td class="number">55%</td>
+                            <td>28%</td>
+                            <td>Most common age group</td>
+                        </tr>
+                        <tr>
+                            <td><strong>70-79</strong></td>
+                            <td class="number">82%</td>
+                            <td class="number">66%</td>
+                            <td class="number">55%</td>
+                            <td class="number">42%</td>
+                            <td>28%</td>
+                            <td>Comorbidities may affect treatment</td>
+                        </tr>
+                        <tr>
+                            <td><strong>80+</strong></td>
+                            <td class="number">68%</td>
+                            <td class="number">48%</td>
+                            <td class="number">38%</td>
+                            <td class="number">25%</td>
+                            <td>15%</td>
+                            <td>Treatment focused on quality of life</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="citation">
+                <span class="citation__source">Data Source:</span> SEER*Explorer 2015-2021, Cancer Statistics 2024.
+                <a href="https://seer.cancer.gov/statistics-network/explorer/" target="_blank">View SEER Explorer</a>
+            </div>
+        </section>
+
+        <!-- Survival by Age AND Stage Combined -->
+        <section class="section">
+            <h2 style="margin-bottom: var(--spacing-lg);">Combined Age + Stage Survival (5-Year)</h2>
+            <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-xl);">This table shows how both age and stage at diagnosis combine to affect survival outcomes.</p>
+
+            <div class="data-table-container">
+                <table class="data-table" id="survival-age-stage">
+                    <thead>
+                        <tr>
+                            <th>Age / Stage</th>
+                            <th><span class="stage-badge stage-1">I</span> Localized</th>
+                            <th><span class="stage-badge stage-2">II</span> Regional</th>
+                            <th><span class="stage-badge stage-3">III</span> Regional+</th>
+                            <th><span class="stage-badge stage-4">IV</span> Distant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Under 50</strong></td>
+                            <td class="number highlight">93%</td>
+                            <td class="number">78%</td>
+                            <td class="number">65%</td>
+                            <td class="number">22%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>50-64</strong></td>
+                            <td class="number highlight">92%</td>
+                            <td class="number">75%</td>
+                            <td class="number">60%</td>
+                            <td class="number">18%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>65-74</strong></td>
+                            <td class="number">90%</td>
+                            <td class="number">70%</td>
+                            <td class="number">52%</td>
+                            <td class="number">14%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>75+</strong></td>
+                            <td class="number">82%</td>
+                            <td class="number">58%</td>
+                            <td class="number">40%</td>
+                            <td class="number">8%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="citation">
+                <span class="citation__source">Note:</span> Combined age-stage data derived from SEER 2015-2021. Singapore-specific age-stage cross-tabulation is limited; these figures provide general guidance.
+            </div>
+        </section>
+
+        <!-- Long-term Survival -->
+        <section class="section">
+            <h2 style="margin-bottom: var(--spacing-lg);">Long-Term Survival (10 and 20 Years)</h2>
+            <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-xl);">Long-term survival data is limited but important for planning. Note that 20-year data is based on older treatment protocols.</p>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Cancer Type</th>
+                            <th>5-Year</th>
+                            <th>10-Year</th>
+                            <th>20-Year</th>
+                            <th>Data Quality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Thyroid</strong></td>
+                            <td class="number">98%</td>
+                            <td class="number">97%</td>
+                            <td class="number">95%</td>
+                            <td><span class="survival-badge excellent">Good Data</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prostate</strong></td>
+                            <td class="number">98%</td>
+                            <td class="number">95%</td>
+                            <td class="number">~85%</td>
+                            <td><span class="survival-badge excellent">Good Data</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Breast</strong></td>
+                            <td class="number">90%</td>
+                            <td class="number">84%</td>
+                            <td class="number">~78%</td>
+                            <td><span class="survival-badge excellent">Good Data</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colorectal</strong></td>
+                            <td class="number">65%</td>
+                            <td class="number">58%</td>
+                            <td class="number">~52%</td>
+                            <td><span class="survival-badge good">Moderate Data</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lung</strong></td>
+                            <td class="number">24%</td>
+                            <td class="number">15%</td>
+                            <td class="number">~10%</td>
+                            <td><span class="survival-badge moderate">Limited Data</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liver</strong></td>
+                            <td class="number">21%</td>
+                            <td class="number">12%</td>
+                            <td class="number">~8%</td>
+                            <td><span class="survival-badge moderate">Limited Data</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pancreas</strong></td>
+                            <td class="number">12%</td>
+                            <td class="number">8%</td>
+                            <td class="number">~5%</td>
+                            <td><span class="survival-badge fair">Limited Data</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="citation">
+                <span class="citation__source">Note:</span> 20-year survival data is extrapolated from long-term follow-up studies. Recent treatment advances may improve future long-term outcomes.
+                <a href="https://acsjournals.onlinelibrary.wiley.com/doi/10.3322/caac.21820" target="_blank">Cancer Statistics 2024</a>
+            </div>
+        </section>
+
+        <!-- Singapore vs International -->
+        <section class="section">
+            <h2 style="margin-bottom: var(--spacing-lg);">Singapore vs International Survival Rates</h2>
+            <p style="color: var(--color-gray-600); margin-bottom: var(--spacing-xl);">Comparing Singapore outcomes with international benchmarks (5-year relative survival).</p>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Cancer Type</th>
+                            <th>Singapore</th>
+                            <th>US (SEER)</th>
+                            <th>UK</th>
+                            <th>Global Average</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Breast</strong></td>
+                            <td class="number">82%</td>
+                            <td class="number">90%</td>
+                            <td class="number">85%</td>
+                            <td class="number">73%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Colorectal</strong></td>
+                            <td class="number">62%</td>
+                            <td class="number">65%</td>
+                            <td class="number">60%</td>
+                            <td class="number">50%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lung</strong></td>
+                            <td class="number">26%</td>
+                            <td class="number">24%</td>
+                            <td class="number">17%</td>
+                            <td class="number">18%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prostate</strong></td>
+                            <td class="number">89%</td>
+                            <td class="number">98%</td>
+                            <td class="number">88%</td>
+                            <td class="number">70%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stomach</strong></td>
+                            <td class="number">32%</td>
+                            <td class="number">33%</td>
+                            <td class="number">20%</td>
+                            <td class="number">25%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liver</strong></td>
+                            <td class="number">18%</td>
+                            <td class="number">21%</td>
+                            <td class="number">13%</td>
+                            <td class="number">18%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="citation">
+                <span class="citation__source">Sources:</span>
+                Singapore Cancer Registry 2022,
+                <a href="https://seer.cancer.gov/statfacts/" target="_blank">SEER</a>,
+                <a href="https://gco.iarc.who.int/" target="_blank">GLOBOCAN 2022</a>,
+                Cancer Research UK
+            </div>
+        </section>
+
+        <!-- Key Takeaways -->
+        <section class="section">
+            <div class="info-card">
+                <h2>Key Takeaways</h2>
+                <ul>
+                    <li><strong>Stage at diagnosis matters most:</strong> Early-stage cancers have dramatically better outcomes than late-stage cancers. Regular screening is crucial.</li>
+                    <li><strong>Survival rates are improving:</strong> From 1968-2022, cancer mortality in Singapore decreased from 93 to 72 deaths per 100,000 despite rising incidence.</li>
+                    <li><strong>Individual outcomes vary:</strong> Statistics represent averages - your outcome depends on many factors including treatment response and overall health.</li>
+                    <li><strong>Newer treatments not fully reflected:</strong> Statistics are based on patients diagnosed years ago. Recent advances may improve current outcomes.</li>
+                    <li><strong>Age affects but doesn't determine:</strong> While older patients generally have lower survival rates, many factors influence individual prognosis.</li>
+                </ul>
+
+                <div style="margin-top: var(--spacing-xl); text-align: center;">
+                    <a href="treatment.html" class="btn btn-primary">View Treatment Options</a>
+                    <a href="costs.html" class="btn btn-secondary" style="margin-left: var(--spacing-md);">View Treatment Costs</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4>CancerInsight SG</h4>
+                    <p>Providing evidence-based cancer information to help Singaporeans make informed decisions.</p>
+                </div>
+                <div>
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="assessment.html">Health Profile</a></li>
+                        <li><a href="survival.html">Survival Rates</a></li>
+                        <li><a href="treatment.html">Treatments</a></li>
+                        <li><a href="costs.html">Costs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Data Sources</h4>
+                    <ul>
+                        <li><a href="https://www.nrdo.gov.sg/publications/cancer" target="_blank">SG Cancer Registry</a></li>
+                        <li><a href="https://seer.cancer.gov/statfacts/" target="_blank">SEER Statistics</a></li>
+                        <li><a href="https://gco.iarc.who.int/" target="_blank">GLOBOCAN</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://www.nccs.com.sg" target="_blank">NCCS</a></li>
+                        <li><a href="https://www.singaporecancersociety.org.sg" target="_blank">SG Cancer Society</a></li>
+                        <li><a href="resources.html">All Resources</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 CancerInsight SG. For educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
